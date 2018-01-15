@@ -29,14 +29,12 @@ namespace TankGame
 
         public void Move(float amount)
         {
-            /*
             Vector3 position = transform.position;
-            Vector3 movement = Vector3.forward * amount * _moveSpeed * Time.deltaTime;
+            Vector3 movement = transform.forward * amount * _moveSpeed * Time.deltaTime;
             position += movement;
             transform.position = position;
-            */
 
-            transform.Translate(Vector3.forward * amount * _moveSpeed * Time.deltaTime);
+            //transform.Translate(Vector3.forward * amount * _moveSpeed * Time.deltaTime);
         }
     }
 

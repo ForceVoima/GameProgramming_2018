@@ -13,6 +13,12 @@ namespace TankGame
 
         protected IMover Mover { get { return _mover; } }
 
+        public Weapon Weapon
+        {
+            get;
+            protected set;
+        }
+
         protected void Awake()
         {
             Init();
@@ -20,12 +26,13 @@ namespace TankGame
 
         public virtual void Init()
         {
-            _mover = GetComponent<IMover>();
+            _mover = gameObject.GetOrAddComponent<TransformMover>();
+            _mover.Init(_moveSpeed, _turnSpeed);
 
-            if (_mover == null)
-                Debug.LogError("IMover is missing in " + gameObject);
-            else
-                _mover.Init(_moveSpeed, _turnSpeed);
+            Weapon = GetComponentInChildren<Weapon>();
+
+            if (Weapon != null)
+                Weapon.Init(this);
         }
 
         public virtual void Clear()
