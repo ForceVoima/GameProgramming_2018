@@ -11,6 +11,8 @@ namespace TankGame
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _turnSpeed = 50f;
 
+        private Test test;
+
         protected IMover Mover { get { return _mover; } }
 
         public Weapon Weapon
@@ -33,6 +35,12 @@ namespace TankGame
 
             if (Weapon != null)
                 Weapon.Init(this);
+
+            test = gameObject.GetComponentInHierarchy<Test>(true);
+
+            Debug.Log("test found in: " + test);
+
+            test.Find();
         }
 
         public virtual void Clear()
