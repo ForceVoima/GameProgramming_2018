@@ -14,6 +14,13 @@ namespace TankGame
 
             Mover.Turn(_input.x);
             Mover.Move(_input.z);
+
+            bool shoot = Input.GetButton("Fire1");
+
+            if (shoot)
+            {
+                Weapon.Shoot();
+            }
         }
 
         private Vector3 ReadInput()

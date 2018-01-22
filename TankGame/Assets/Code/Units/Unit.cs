@@ -35,12 +35,6 @@ namespace TankGame
 
             if (Weapon != null)
                 Weapon.Init(this);
-
-            test = gameObject.GetComponentInHierarchy<Test>(true);
-
-            Debug.Log("test found in: " + test);
-
-            test.Find();
         }
 
         public virtual void Clear()
