@@ -960,6 +960,7 @@ MonoBehaviour:
   _path: {fileID: 0}
   _wayPointArriveDistance: 0
   _target: {fileID: 0}
+  _direction: 0
 --- !u!114 &1475441676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1103,6 +1104,7 @@ MonoBehaviour:
   _path: {fileID: 414738274}
   _wayPointArriveDistance: 0.1
   _target: {fileID: 1475441675}
+  _direction: 0
 --- !u!4 &1865913234
 Transform:
   m_ObjectHideFlags: 0
@@ -1110,7 +1112,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1865913231}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.02, y: 0, z: 2.27}
+  m_LocalPosition: {x: -13.02, y: 0, z: -35.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 13662217}
