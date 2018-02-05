@@ -11,5 +11,15 @@ namespace TankGame.AI
         {
             throw new NotImplementedException();
         }
+
+        public override void StateActivated()
+        {
+            base.StateActivated();
+        }
+
+        public override void StateDeactivating()
+        {
+            base.StateDeactivating();
+        }
     }
 }

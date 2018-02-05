@@ -935,7 +935,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1475441673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 43.8, y: 0, z: 45.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 182891341}
@@ -953,8 +953,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84155bc33f33aa4fb44c5dd7dcb2821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _moveSpeed: 4
   _turnSpeed: 50
+  _detectPlayerDistance: 0
+  _shootingDistance: 0
+  _path: {fileID: 0}
+  _wayPointArriveDistance: 0
+  _target: {fileID: 0}
 --- !u!114 &1475441676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,6 +1098,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 4
   _turnSpeed: 180
+  _detectPlayerDistance: 10
+  _shootingDistance: 5
+  _path: {fileID: 414738274}
+  _wayPointArriveDistance: 0.1
+  _target: {fileID: 1475441675}
 --- !u!4 &1865913234
 Transform:
   m_ObjectHideFlags: 0

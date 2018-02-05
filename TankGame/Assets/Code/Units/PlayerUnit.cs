@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TankGame
 {
-    public class PlayerUnit : Unit
+    public class PlayerUnit : EnemyUnit
     {
         Vector3 _input = Vector3.zero;
 

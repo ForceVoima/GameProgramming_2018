@@ -13,7 +13,7 @@ namespace TankGame
 
         private Test test;
 
-        protected IMover Mover { get { return _mover; } }
+        public IMover Mover { get { return _mover; } }
 
         public Weapon Weapon
         {

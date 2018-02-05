@@ -19,7 +19,7 @@ namespace TankGame.AI
 		// The target states to which we can transition from this state.
 		public IList<AIStateType> TargetStates { get; protected set; }
 		// The owner Unit of this state (Unit is the state controller class)
-		public Unit Owner { get; protected set; }
+		public EnemyUnit Owner { get; protected set; }
 
 		protected AIStateBase()
 		{
@@ -64,7 +64,7 @@ namespace TankGame.AI
 		/// <summary>
 		/// Called just before state is deactivated.
 		/// </summary>
-		public virtual void StateDecativating()
+		public virtual void StateDeactivating()
 		{
 		}
 

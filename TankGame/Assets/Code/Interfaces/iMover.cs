@@ -15,5 +15,9 @@ namespace TankGame
 
         void Move(float amount);
         void Turn(float amount);
+
+        void Move(Vector3 direction);
+
+        void Turn(Vector3 target);
     }
 }

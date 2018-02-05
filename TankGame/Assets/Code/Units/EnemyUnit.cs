@@ -4,14 +4,25 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using TankGame.AI;
+using TankGame.WaypointSystem;
 
 namespace TankGame
 {
-	public class EnemyUnit : Unit
-	{
-		private IList<AIStateBase> _states = new List< AIStateBase >();
+    public class EnemyUnit : Unit
+    {
+        [SerializeField] private float _detectPlayerDistance;
+        [SerializeField] private float _shootingDistance;
+        [SerializeField] private Path _path;
+        [SerializeField] private float _wayPointArriveDistance;
+        [SerializeField] private PlayerUnit _target;
+        [SerializeField] private Direction _direction = Direction.Forward;
 
-		public AIStateBase CurrentState { get; private set; }
+        private IList<AIStateBase> _states = new List<AIStateBase>();
+
+        public float DetectPlayerDistance { get { return _detectPlayerDistance; } }
+        public float ShootingDistance { get { return _shootingDistance; } }
+        public AIStateBase CurrentState { get; private set; }
+        public PlayerUnit Target { get { return _target; } set { Target = _target; } }
 
 		public override void Init()
 		{
@@ -24,13 +35,20 @@ namespace TankGame
 
 		private void InitStates()
 		{
-			// TODO: Implement me!
+            PatrolState patrol = new PatrolState(this, _path, _direction, _wayPointArriveDistance);
+
+            // TODO: Implement me!
+            _states.Add(patrol);
+
+            CurrentState = _states[0];
+            CurrentState.StateActivated();
 		}
 
 		protected override void Update()
 		{
-			// TODO: Remove this.
-			return;
+            // TODO: Remove this.
+            if (CurrentState == null)
+                return;
 
 			CurrentState.Update();
 		}
@@ -47,7 +65,7 @@ namespace TankGame
 			AIStateBase state = GetStateByType( targetState );
 			if ( state != null )
 			{
-				CurrentState.StateDecativating();
+				CurrentState.StateDeactivating();
 				CurrentState = state;
 				CurrentState.StateActivated();
 				result = true;
