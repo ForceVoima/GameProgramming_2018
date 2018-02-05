@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace TankGame
 {
@@ -24,9 +25,26 @@ namespace TankGame
 				component = gameObject.AddComponent( type );
 			}
 			return component;
-		}
+        }
 
+        /// <summary>
+        /// Adds an item to the list only if it doesn't exist on the list already.
+        /// </summary>
+        /// <typeparam name="T">The type of the item</typeparam>
+        /// <param name="list">The list the item should be added to.</param>
+        /// <param name="item">The item to be added to the list.</param>
+        /// <returns>True, if the item was not on a list before and was 
+        /// added to the list successfully. False otherwise.</returns>
+        public static bool AddUnique<T>(this IList<T> list, T item)
+        {
+            if (list.Contains(item))
+            {
+                return false;
+            }
 
+            list.Add(item);
+            return true;
+        }
 
         /// <summary>
         /// Gets the component the GameObject or from active and inactive parents.
