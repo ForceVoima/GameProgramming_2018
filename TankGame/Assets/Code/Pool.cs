@@ -1,11 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace TankGame
 {
 	public class Pool<T>
-        where T : Component
+		where T : Component
 	{
 		// The initial size of the pool.
 		private int _poolSize;
@@ -20,82 +20,73 @@ namespace TankGame
 		// The list containing all the objects in this pool.
 		private List< T > _pool;
 
-        private System.Action<T> _initMethod;
+		private Action< T > _initMethod;
 
-        private Transform _parent;
-
-		public Pool(int poolSize, bool shouldGrow, T prefab, Transform parent)
+		public Pool(int poolSize, bool shouldGrow, T prefab)
 		{
-            _poolSize = poolSize;
-            _shouldGrow = shouldGrow;
-            _objectPrefab = prefab;
-            _parent = parent;
+			_poolSize = poolSize;
+			_shouldGrow = shouldGrow;
+			_objectPrefab = prefab;
 
 			// Initialize the pool by adding '_poolSize' amount of objects to the pool.
 			_pool = new List< T >( _poolSize );
 
 			for ( int i = 0; i < _poolSize; ++i )
 			{
-                T item = AddObject();
-
-                if (_initMethod != null)
-                {
-                    _initMethod(item);
-                }
+				AddObject();
 			}
 		}
 
-        public Pool(int poolSize, bool shouldGrow, T prefab, Transform parent, System.Action<T>InitMethod)
-            : this(poolSize, shouldGrow, prefab, parent)
-        {
-            _initMethod = InitMethod;
+		public Pool( int poolSize, bool shouldGrow, T prefab, Action< T > initMethod ) 
+			: this(poolSize, shouldGrow, prefab)
+		{
+			_initMethod = initMethod;
+			foreach ( var item in _pool )
+			{
+				_initMethod( item );
+			}
+		}
 
-            foreach (T item in _pool)
-            {
-                _initMethod(item);
-            }
-        }
-
-        /// <summary>
-        /// Adds an object to the pool.
-        /// </summary>
-        /// <param name="isActive">Should the object be active when it is added to the pool or not.</param>
-        /// <returns>The object added to the pool.</returns>
-        private T AddObject( bool isActive = false )
+		/// <summary>
+		/// Adds an object to the pool.
+		/// </summary>
+		/// <param name="isActive">Should the object be active when it is added to the pool or not.</param>
+		/// <returns>The object added to the pool.</returns>
+		private T AddObject( bool isActive = false )
 		{
 			// Instantiate pooled objects under this parent.
-			T go = Object.Instantiate( _objectPrefab, _parent );
+			T component = UnityEngine.Object.Instantiate( _objectPrefab );
 
 			if ( isActive )
 			{
-				Activate( go );
+				Activate( component );
 			}
 			else
 			{
-				Deactivate( go );
+				Deactivate( component );
 			}
 
-			_pool.Add( go );
+			_pool.Add( component );
 
-			return go;
+			return component;
 		}
 
 		/// <summary>
 		/// Called when the object is returned to the pool. Deactivates the object.
 		/// </summary>
-		/// <param name="go">Object to deactivate</param>
-		protected virtual void Deactivate( T go )
+		/// <param name="component">Object to deactivate</param>
+		protected virtual void Deactivate( T component )
 		{
-			go.gameObject.SetActive( false );
+			component.gameObject.SetActive( false );
 		}
 
 		/// <summary>
 		/// Called when the object is fetched from the pool. Activates the object.
 		/// </summary>
-		/// <param name="go">Object to activate</param>
-		protected virtual void Activate( T go )
+		/// <param name="component">Object to activate</param>
+		protected virtual void Activate( T component )
 		{
-			go.gameObject.SetActive( true );
+			component.gameObject.SetActive( true );
 		}
 
 		/// <summary>
@@ -133,17 +124,17 @@ namespace TankGame
 		/// <summary>
 		/// Returns an object back to the pool.
 		/// </summary>
-		/// <param name="go">The object which should be returned to the pool.</param>
+		/// <param name="component">The object which should be returned to the pool.</param>
 		/// <returns>Could the object be returned back to the pool.</returns>
-		public bool ReturnObject( T go )
+		public bool ReturnObject( T component )
 		{
 			bool result = false;
 
-			foreach ( T pooledObject in _pool )
+			foreach ( var pooledObject in _pool )
 			{
-				if ( pooledObject == go )
+				if ( pooledObject == component )
 				{
-					Deactivate( go );
+					Deactivate( component );
 					result = true;
 					break;
 				}

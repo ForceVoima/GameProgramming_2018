@@ -26,6 +26,21 @@ namespace TankGame.AI
 			TargetStates = new List<AIStateType>();
 		}
 
+		// A constructor which sets the Owner and State properties and calles
+		// the default constructor.
+		protected AIStateBase( EnemyUnit owner, AIStateType state )
+			: this()
+		{
+			Owner = owner;
+			State = state;
+		}
+
+		/// <summary>
+		/// Add a valid state to which we can go from this state.
+		/// </summary>
+		/// <param name="targetState">The target state</param>
+		/// <returns>True, if the state was added succesfully (not present in our 
+		/// datastructure already). False otherwise.</returns>
 		public bool AddTransition( AIStateType targetState )
 		{
 			// Use the extension method AddUnique to add a target state. Will return false
