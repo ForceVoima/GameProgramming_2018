@@ -36,6 +36,7 @@ namespace TankGame
 		// The player unit this enemy is trying to shoot at.
 		public PlayerUnit Target { get; set; }
 		
+        // Question mark makes this nullable!
 		public Vector3? ToTargetVector
 		{
 			get

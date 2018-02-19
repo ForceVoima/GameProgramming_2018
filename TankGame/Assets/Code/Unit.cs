@@ -34,6 +34,7 @@ namespace TankGame
 
 		protected void OnDestroy()
 		{
+            // !IMPORTANT Stop listening to this event = release memory
 			Health.UnitDied -= HandleUnitDied;
 		}
 
@@ -49,6 +50,8 @@ namespace TankGame
 			}
 
 			Health = new Health( this, _startingHealth );
+
+            // Start listening to this event!
 			Health.UnitDied += HandleUnitDied;
 		}
 
