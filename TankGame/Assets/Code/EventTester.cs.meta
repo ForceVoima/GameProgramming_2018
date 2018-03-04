@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 fileFormatVersion: 2
-guid: 741291c8d0a81734ca820f87eece3e29
-timeCreated: 1519034838
+guid: 570469387aaab13468422786bf4ca905
+timeCreated: 1519029688
 licenseType: Free
 MonoImporter:
   externalObjects: {}
@@ -12,8 +11,3 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-=======
-﻿fileFormatVersion: 2
-guid: 452203ce96824ad09eccdfb793a6adf4
-timeCreated: 1519028955
->>>>>>> Kojo/master

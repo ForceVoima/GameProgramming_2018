@@ -1,12 +1,21 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 6f0ae0480b2f68e4491bba8db7d919ca
 timeCreated: 1519041782
+=======
+guid: 914c5d09f1c241be93abfc22f4deed73
+timeCreated: 1519036009
+>>>>>>> Kojo/master
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
+<<<<<<< HEAD
   executionOrder: 0
+=======
+  executionOrder: -100
+>>>>>>> Kojo/master
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

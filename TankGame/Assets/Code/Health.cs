@@ -10,7 +10,11 @@ namespace TankGame
 	{
 		public event Action< Unit > UnitDied;
 
+<<<<<<< HEAD
 		public int CurrentHealth { get; set; }
+=======
+		public int CurrentHealth { get; protected set; }
+>>>>>>> Kojo/master
 		public Unit Owner { get; private set; }
 
 		public Health( Unit owner, int startingHealth )
@@ -28,14 +32,14 @@ namespace TankGame
 		{
 			CurrentHealth = Mathf.Clamp( CurrentHealth - damage, 0, CurrentHealth );
 			bool didDie = CurrentHealth == 0;
-			if ( didDie && UnitDied != null )
+			if ( didDie )
 			{
-				// TODO: Debug this to show how events work.
-				UnitDied( Owner );
+				RaiseUnitDiedEvent();
 			}
 			return didDie;
 		}
 
+<<<<<<< HEAD
         protected void RaiseUnitDiedEvent()
         {
             if (UnitDied != null)
@@ -43,5 +47,14 @@ namespace TankGame
                 UnitDied(Owner);
             }
         }
+=======
+		protected void RaiseUnitDiedEvent()
+		{
+			if ( UnitDied != null )
+			{
+				UnitDied( Owner );
+			}
+		}
+>>>>>>> Kojo/master
 	}
 }
