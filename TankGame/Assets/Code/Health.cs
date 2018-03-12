@@ -10,11 +10,7 @@ namespace TankGame
 	{
 		public event Action< Unit > UnitDied;
 
-<<<<<<< HEAD
-		public int CurrentHealth { get; set; }
-=======
 		public int CurrentHealth { get; protected set; }
->>>>>>> Kojo/master
 		public Unit Owner { get; private set; }
 
 		public Health( Unit owner, int startingHealth )
@@ -39,15 +35,6 @@ namespace TankGame
 			return didDie;
 		}
 
-<<<<<<< HEAD
-        protected void RaiseUnitDiedEvent()
-        {
-            if (UnitDied != null)
-            {
-                UnitDied(Owner);
-            }
-        }
-=======
 		protected void RaiseUnitDiedEvent()
 		{
 			if ( UnitDied != null )
@@ -55,6 +42,11 @@ namespace TankGame
 				UnitDied( Owner );
 			}
 		}
->>>>>>> Kojo/master
+
+		public void SetHealth( int health )
+		{
+			// TODO: What if the unit is dead
+			CurrentHealth = health;
+		}
 	}
 }
