@@ -36,7 +36,6 @@ namespace TankGame
 		// The player unit this enemy is trying to shoot at.
 		public PlayerUnit Target { get; set; }
 		
-        // Question mark makes this nullable!
 		public Vector3? ToTargetVector
 		{
 			get
@@ -66,6 +65,9 @@ namespace TankGame
 
 			FollowTargetState followTarget = new FollowTargetState( this );
 			_states.Add( followTarget );
+
+			ShootState shoot = new ShootState( this );
+			_states.Add( shoot );
 
 			CurrentState = patrol;
 			CurrentState.StateActivated();

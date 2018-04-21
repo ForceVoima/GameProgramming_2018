@@ -1,16 +1,32 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
+using System.Linq.Expressions;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace TankGame
 {
-	public class Health
+	public class Health : INotifyPropertyChanged
 	{
-		public event Action< Unit > UnitDied;
+		private int _currentHealth;
 
-		public int CurrentHealth { get; protected set; }
+		public event Action< Unit > UnitDied;
+		public event Action< Unit, int > HealthChanged;
+
+		public int CurrentHealth
+		{
+			get { return _currentHealth; }
+			protected set
+			{
+				_currentHealth = value;
+				// HealthChanged event is raised every time the CurrentHealth property is set.
+				if ( HealthChanged != null )
+				{
+					HealthChanged( Owner, _currentHealth );
+				}
+				OnPropertyChanged( () => CurrentHealth );
+			}
+		}
 		public Unit Owner { get; private set; }
 
 		public Health( Unit owner, int startingHealth )
@@ -47,6 +63,18 @@ namespace TankGame
 		{
 			// TODO: What if the unit is dead
 			CurrentHealth = health;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged< T >( Expression< Func< T > > propertyLambda )
+		{
+			if ( PropertyChanged != null )
+			{
+				PropertyChanged( this,
+					new PropertyChangedEventArgs( Utils.Utils.GetPropertyName( propertyLambda ) ) );
+			}
 		}
 	}
 }

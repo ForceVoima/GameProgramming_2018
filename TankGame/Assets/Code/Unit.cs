@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TankGame.Persistence;
+using TankGame.Messaging;
 
 namespace TankGame
 {
@@ -38,7 +39,7 @@ namespace TankGame
 
 		private IMover _mover;
 
-		[SerializeField]
+		[SerializeField, HideInInspector]
 		private int _id = -1;
 
 		public Weapon Weapon
@@ -57,14 +58,8 @@ namespace TankGame
 			private set { _id = value; }
 		}
 
-		protected void Awake()
-		{
-			Init();
-		}
-
 		protected void OnDestroy()
 		{
-            // !IMPORTANT Stop listening to this event = release memory
 			Health.UnitDied -= HandleUnitDied;
 		}
 
@@ -80,8 +75,6 @@ namespace TankGame
 			}
 
 			Health = new Health( this, _startingHealth );
-
-            // Start listening to this event!
 			Health.UnitDied += HandleUnitDied;
 		}
 
@@ -108,6 +101,7 @@ namespace TankGame
 
 		protected virtual void HandleUnitDied( Unit unit )
 		{
+			GameManager.Instance.MessageBus.Publish( new UnitDiedMessage( this ) );
 			gameObject.SetActive( false );
 		}
 
