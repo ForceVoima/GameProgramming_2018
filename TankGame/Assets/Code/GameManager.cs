@@ -35,6 +35,14 @@ namespace TankGame
 		private List< Unit > _enemyUnit = new List< Unit >();
 		private Unit _playerUnit = null;
 		private SaveSystem _saveSystem;
+        
+        private int _playerPoints = 0;
+        private int _playerDeaths = 0;
+
+        private bool _resolved = false;
+
+        [SerializeField]
+        private int _pointLimitToWin = 1000;
 
 		public string SavePath
 		{
@@ -132,6 +140,7 @@ namespace TankGame
 			else if ( unit is PlayerUnit )
 			{
 				_playerUnit = unit;
+                _playerUnit.Health.UnitDied += OnPlayerDied;
 			}
 
 			// Add unit's health to the UI.
@@ -163,6 +172,62 @@ namespace TankGame
 			}
 
 			_playerUnit.SetUnitData( data.PlayerData );
-		}
-	}
+        }
+
+        private void OnPlayerDied(Unit unit)
+        {
+            if (_resolved)
+                return;
+
+            _playerDeaths++;
+            UI.UI.Current.DeathsUI.SetDeaths(_playerDeaths);
+            CheckWinCondition();
+        }
+
+        public void ScorePoints(int points)
+        {
+            if (_resolved)
+                return;
+
+            _playerPoints += points;
+            UI.UI.Current.ScoreUI.SetScore(_playerPoints);
+            CheckWinCondition();
+        }
+
+        private void CheckWinCondition()
+        {
+            if (_resolved)
+                return;
+
+            if (_playerDeaths >= 3)
+            {
+                _resolved = true;
+                LoseGame();
+                return;
+            }
+
+            if (_playerPoints >= _pointLimitToWin)
+            {
+                _resolved = true;
+                WinGame();
+                return;
+            }
+        }
+
+        private void WinGame()
+        {
+            foreach (Unit unit in _enemyUnit)
+            {
+                unit.Lose();
+            }
+
+            UI.UI.Current.ScoreUI.YouWin();
+        }
+
+        private void LoseGame()
+        {
+            _playerUnit.Lose();
+            UI.UI.Current.DeathsUI.YouLose();
+        }
+    }
 }

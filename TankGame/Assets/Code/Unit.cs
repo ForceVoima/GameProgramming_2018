@@ -42,6 +42,10 @@ namespace TankGame
 		[SerializeField, HideInInspector]
 		private int _id = -1;
 
+        private Vector3 _spawnPoint;
+
+        private bool _respawn = true;
+
 		public Weapon Weapon
 		{
 			get;
@@ -76,6 +80,8 @@ namespace TankGame
 
 			Health = new Health( this, _startingHealth );
 			Health.UnitDied += HandleUnitDied;
+
+            _spawnPoint = transform.position;
 		}
 
 		public virtual void Clear()
@@ -103,7 +109,23 @@ namespace TankGame
 		{
 			GameManager.Instance.MessageBus.Publish( new UnitDiedMessage( this ) );
 			gameObject.SetActive( false );
-		}
+
+            if (_respawn)
+                Respawn(_spawnPoint);
+        }
+
+        protected virtual void Respawn(Vector3 position)
+        {
+            transform.position = position;
+            Health.Respawn(_startingHealth);
+            gameObject.SetActive(true);
+        }
+
+        public void Lose()
+        {
+            _respawn = false;
+            TakeDamage(200);
+        }
 
 		public virtual UnitData GetUnitData()
 		{

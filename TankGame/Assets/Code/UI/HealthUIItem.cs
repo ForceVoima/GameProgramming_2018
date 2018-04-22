@@ -37,7 +37,8 @@ namespace TankGame.UI
 			// Green text will be used otherwise.
 			_text.color = IsEnemy ? Color.red : Color.green;
 			_unit.Health.HealthChanged += OnUnitHealthChanged;
-			//_unit.Health.UnitDied += OnUnitDied;
+            //_unit.Health.UnitDied += OnUnitDied;
+            _unit.Health.Respawned += OnRespawn;
 			_unitDiedSubscription =
 				GameManager.Instance.MessageBus.Subscribe< UnitDiedMessage >( OnUnitDied );
 			SetText( _unit.Health.CurrentHealth );
@@ -48,27 +49,34 @@ namespace TankGame.UI
 			SetText( _unit.Health.CurrentHealth );
 		}
 
-		private void OnUnitDied( UnitDiedMessage msg )
-		{
-			if ( msg.DeadUnit == _unit )
-			{
-				UnregisterEventListeners();
-				gameObject.SetActive( false );
-			}
-		}
+        private void OnUnitDied(UnitDiedMessage msg)
+        {
+            if (msg.DeadUnit == _unit)
+            {
+                // UnregisterEventListeners();
+                gameObject.SetActive(false);
+            }
+        }
 
-		//private void OnUnitDied(Unit obj)
-		//{
-		//	UnregisterEventListeners();
-		//}
+        private void OnRespawn(Unit unit)
+        {
+            SetText(unit.Health.CurrentHealth);
+            gameObject.SetActive(true);
+        }
 
-		private void UnregisterEventListeners()
+        //private void OnUnitDied(Unit obj)
+        //{
+        //	UnregisterEventListeners();
+        //}
+
+        private void UnregisterEventListeners()
 		{
 			l10n.LanguageLoaded -= OnLanguageLoaded;
 			_unit.Health.HealthChanged -= OnUnitHealthChanged;
 			if ( !GameManager.IsClosing )
 				GameManager.Instance.MessageBus.Unsubscribe( _unitDiedSubscription );
-			//_unit.Health.UnitDied -= OnUnitDied;
+            //_unit.Health.UnitDied -= OnUnitDied;
+            _unit.Health.Respawned -= OnRespawn;
 		}
 
 		private void OnUnitHealthChanged( Unit unit, int health )

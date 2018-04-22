@@ -11,6 +11,7 @@ namespace TankGame
 		private int _currentHealth;
 
 		public event Action< Unit > UnitDied;
+        public event Action< Unit > Respawned;
 		public event Action< Unit, int > HealthChanged;
 
 		public int CurrentHealth
@@ -58,6 +59,16 @@ namespace TankGame
 				UnitDied( Owner );
 			}
 		}
+
+        public void Respawn(int startingHealth)
+        {
+            CurrentHealth = startingHealth;
+
+            if (Respawned != null)
+            {
+                Respawned(Owner);
+            }
+        }
 
 		public void SetHealth( int health )
 		{
